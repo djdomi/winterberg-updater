@@ -15,7 +15,16 @@ echo I for Winterberg V02 (2.xx)
 echo J for Winterberg V01 (1.xx)
 
 
-set /P c=Are you sure you want to continue[Y/N]?
-if /I "%c%" EQU "Y" goto :somewhere
-if /I "%c%" EQU "N" goto :somewhere_else
+set /P c=Your Choice? (Character, after that enter)
+if /I "%c%" EQU "A" goto :V10
+if /I "%c%" EQU "B" goto :V08
+if /I "%c%" EQU "C" goto :V07
+if /I "%c%" EQU "D" goto :V06
+if /I "%c%" EQU "E" goto :V05
+if /I "%c%" EQU "F" goto :V04
+if /I "%c%" EQU "G" goto :V03
+if /I "%c%" EQU "H" goto :V02
+if /I "%c%" EQU "I" goto :V01
+
+
 goto choice
