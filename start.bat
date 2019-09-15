@@ -15,9 +15,10 @@ goto start
 echo Please enter the Path of your EM4 installation
 echo ## ATTENTION ##
 echo the path must have the following syntax:
-echo of your path is c:\programme\sixtoon\emergency4
+echo if your path is c:\programme\sixtoon\emergency4
 set /P sync_path="Enter your path like: /cygwin/C/programme/sixtoon/emergency4"
-cls
+@cls
+@goto choice1
 )
 :choice1
 Echo Please Select which Winterberg-Version you want?
@@ -50,19 +51,44 @@ set /P c=Your Choice? (Character, after that enter)
 
 
 :V10
+rem wem10r
 
 :V09
+rem winterberg_sp_09
 
 :V08
+rem winterberg88
+rem winterberg889
 
 :V07
+rem winterberg75
 
 :V06
+rem winterberg60
 
 :V05
+rem winterberg58
 
 :V04
+rem winterberg40
+
+:V03
+echo Sorry, no release yet avaible
+pause
+@goto start
 
 :V02
+rem winterberg21
 
 :V01
+rem winterberg10
+
+
+
+
+
+
+
+
+
+:eof
