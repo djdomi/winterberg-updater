@@ -19,6 +19,8 @@ echo if your path is c:\programme\sixtoon\emergency4
 set /P sync_path="Enter your path: "
 @echo %SYNC_PATH% > %SYNC_DIRFILE%
 @mkdir -p %SYNC_PATH%
+
+
 @cls
 @goto choice1
 )
