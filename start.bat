@@ -16,7 +16,7 @@ echo Please enter the Path of your EM4 installation
 echo ## ATTENTION ##
 echo the path must have the following syntax:
 echo if your path is c:\programme\sixtoon\emergency4
-set /P sync_path="Enter your path: "
+set /P sync_path="Enter your path as: /cygwin/c/winterberg_updater"
 @echo %SYNC_PATH% > %SYNC_DIRFILE%
 @mkdir -p %SYNC_PATH%
 
