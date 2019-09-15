@@ -1,7 +1,26 @@
-rem Winterberg-Updater V1.0.0.0.0
+@echo off
+@rem Winterberg-Updater V1.0.0.0.0 (Batch-Style)
 
-:choice
-Echo Please Select which Winterberg-Version you Want?
+
+
+
+set SYNC_CMD=bin/rsync.exe 
+set SYNC_OPT=
+rem SYNC_PATH="/cygdrive/C/winterberg_updater"
+
+goto start
+
+:start
+@if exist etc/path.txt ( set /p sync_path=<etc/path.txt ) else (
+echo Please enter the Path of your EM4 installation
+echo ## ATTENTION ##
+echo the path must have the following syntax:
+echo of your path is c:\programme\sixtoon\emergency4
+set /P sync_path="Enter your path like: /cygwin/C/programme/sixtoon/emergency4"
+cls
+)
+:choice1
+Echo Please Select which Winterberg-Version you want?
 echo enter the following numbers/letters
 echo A for Winterberg V10 (10.xx)
 echo B for Winterberg V09 (9.xx)
@@ -13,18 +32,37 @@ echo G for Winterberg V04 (4.xx)
 echo H for Winterberg V03 (3.xx)
 echo I for Winterberg V02 (2.xx)
 echo J for Winterberg V01 (1.xx)
-
-
+echo Q for quit/exit
 set /P c=Your Choice? (Character, after that enter)
-if /I "%c%" EQU "A" goto :V10
-if /I "%c%" EQU "B" goto :V08
-if /I "%c%" EQU "C" goto :V07
-if /I "%c%" EQU "D" goto :V06
-if /I "%c%" EQU "E" goto :V05
-if /I "%c%" EQU "F" goto :V04
-if /I "%c%" EQU "G" goto :V03
-if /I "%c%" EQU "H" goto :V02
-if /I "%c%" EQU "I" goto :V01
+@if /I "%c%" EQU "A" goto :V10
+@if /I "%c%" EQU "B" goto :V08
+@if /I "%c%" EQU "C" goto :V07
+@if /I "%c%" EQU "D" goto :V06
+@if /I "%c%" EQU "E" goto :V05
+@if /I "%c%" EQU "F" goto :V04
+@if /I "%c%" EQU "G" goto :V03
+@if /I "%c%" EQU "H" goto :V02
+@if /I "%c%" EQU "I" goto :V01
+@if /I "%C%" EQU "Q" goto :eof
+@goto choice
 
 
-goto choice
+
+
+:V10
+
+:V09
+
+:V08
+
+:V07
+
+:V06
+
+:V05
+
+:V04
+
+:V02
+
+:V01
