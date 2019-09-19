@@ -1,10 +1,11 @@
+@echo off >NUL
 @cls
-@echo off
-@rem Winterberg-Updater V0.0.0.0.0 extrem buggy alpha (Batch-Style)
+@rem Winterberg-Updater V0.0.0.0.0 extrem buggy alpha (Batch-Style) by djdomi (wiki-mod.de / winterberg-updater / winterberg.wiki-mod.de) https://t.me/winterbergmod
 @SETLOCAL EnableDelayedExpansion
-rem Color 0A - default, green
-rem Color 74   ATTENTION Text, Grey - Red
-
+rem Color 0A - DEFAULT, green
+rem Color 74 - ATTENTION Text, Grey - Red
+rem Color 45 - ERROR Text
+bin\curl\curl -s https://winterberg-updater.wiki-mod.de/update.txt >NUL
 set SYNC_DIRFILE=etc/path_unix.txt
 set SYNC_DIRFILE2=etc/path_win.txt
 set SYNC_CMD=bin\rsync.exe 
@@ -35,7 +36,8 @@ rem @echo %SYNC_PATH%
 )
 :choice1
 color 0A
-if exist %SYNC_DIRFILE2% ( set READ=< %SYNC_DIRFILE2%|echo Path Set as: %READ%)
+if exist %SYNC_DIRFILE2% ( set READ2=< %SYNC_DIRFILE2%|echo Path Set as: %READ2%) else ( goto start )
+if exist %SYNC_DIRFILE% ( set READ1=< %SYNC_DIRFILE%|echo Path Set as: %READ1%) else ( goto start )
 echo.
 Echo "Please Select which Winterberg-Version you want?"
 echo.
@@ -51,6 +53,8 @@ echo "-->> H for Winterberg V03 (3.xx)"
 echo "-->> I for Winterberg V02 (2.xx)"
 echo "-->> J for Winterberg V01 (1.xx)"
 echo "-->> RESET for Reset the path in case of problems"
+echo.
+echo "-> HELP for I need Support via Chat?"
 echo "-->> Q for quit/exit"
 echo.
 set /P C="Your Choice? (Character, after that enter)"
@@ -67,7 +71,26 @@ set /P C="Your Choice? (Character, after that enter)"
 @if /I "%C%" EQU "J" goto :V01
 @if /I "%C%" EQU "Q" goto :eof
 @if /I "%C%" EQU "reset" goto :res
+@IF /I "%C%" EQU "help" goto :gethelp
 @goto choice1
+
+:gethelp
+Echo Starting Telegram Link
+start https://t.me/winterbergmod
+Echo Starting Winterberg Wiki
+start https://winterberg.wiki-mod.de
+echo if you still have questions, contact
+echo create a ticket at support@wiki-mod.de
+goto eof
+
+:wrong
+color 46
+echo something went (suddenly) wrong
+echo we try from beginng and reset the path
+echo if you _D_O_N_T_ want to continue CTRL+C%
+echo else, press Enter
+pause
+goto res
 
 :res
 echo del %~dp0\etc\path_unix.txt %~dp0\etc\path_win.txt
@@ -149,7 +172,7 @@ cls
 echo.
 echo.
 timeout 1 >NUL
-echo "                 (__)"
+echo "                (__)"
 echo "                (oo)"
 echo "          /------\/"
 echo "         / |    ||"
