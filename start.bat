@@ -1,47 +1,63 @@
+@cls
 @echo off
-@rem Winterberg-Updater V1.0.0.0.0 (Batch-Style)
+@rem Winterberg-Updater V0.0.0.0.0 extrem buggy alpha (Batch-Style)
+@SETLOCAL EnableDelayedExpansion
+rem Color 0A - default, green
+rem Color 74   ATTENTION Text, Grey - Red
 
-
-
-set SYNC_DIRFILE=etc/path.txt
+set SYNC_DIRFILE=etc/path_unix.txt
+set SYNC_DIRFILE2=etc/path_win.txt
 set SYNC_CMD=bin\rsync.exe 
-set SYNC_OPT=-avzp --compress-level=3
-
+set SYNC_OPT=-avzp --compress-level=1 --relative --progress
+set SYNC_DIRCMD=bin\cygpath
 
 goto start
 
 :start
-@if exist %SYNC_DIRFILE% ( set /p sync_path=<%SYNC_DIRFILE% ) else (
+@if exist %SYNC_DIRFILE% ( set /p sync_path2=<%SYNC_DIRFILE% ) else (
+color 74
+
+echo #### ATTENTION ####
+echo.
 echo Please enter the Path of your EM4 installation
-echo ## ATTENTION ##
-echo the path must have the following syntax:
-echo if your path is c:\programme\sixtoon\emergency4
+echo "as example: c:\programme\sixtoon\emergency4"
+
 set /P sync_path="Enter your path: "
-@echo %SYNC_PATH% > %SYNC_DIRFILE%
-@mkdir -p %SYNC_PATH%
+echo %sync_path% > %SYNC_DIRFILE2%
+%SYNC_DIRCMD% %SYNC_PATH% > %SYNC_DIRFILE%
+
+rem @echo %SYNC_PATH%
+
 
 
 @cls
 @goto choice1
 )
 :choice1
-Echo Please Select which Winterberg-Version you want?
-echo enter the following numbers/letters
-echo A for Winterberg V10 (10.xx)
-echo B for Winterberg V09 (9.xx)
-echo C for Winterberg V08 (8.xx)
-echo D for Winterberg V07 (7.xx)
-echo E for Winterberg V06 (6.xx)
-echo F for Winterberg V05 (5.xx)
-echo G for Winterberg V04 (4.xx)
-echo H for Winterberg V03 (3.xx)
-echo I for Winterberg V02 (2.xx)
-echo J for Winterberg V01 (1.xx)
-echo Q for quit/exit
+color 0A
+if exist %SYNC_DIRFILE2% ( set READ=< %SYNC_DIRFILE2%|echo Path Set as: %READ%)
+echo.
+Echo "Please Select which Winterberg-Version you want?"
+echo.
+echo "-->> A for Winterberg V10 (10.xx)"
+echo "-->> B for Winterberg V09 (9.xx)"
+echo "--->> C for Winterberg V08 (8.80)"
+echo "--->> CC for Winterberg V08.89 (8.89)"
+echo "-->> D for Winterberg V07 (7.xx)"
+echo "-->> E for Winterberg V06 (6.xx)"
+echo "-->> F for Winterberg V05 (5.xx)"
+echo "-->> G for Winterberg V04 (4.xx)"
+echo "-->> H for Winterberg V03 (3.xx)"
+echo "-->> I for Winterberg V02 (2.xx)"
+echo "-->> J for Winterberg V01 (1.xx)"
+echo "-->> RESET for Reset the path in case of problems"
+echo "-->> Q for quit/exit"
+echo.
 set /P C="Your Choice? (Character, after that enter)"
 @if /I "%C%" EQU "A" goto :V10
 @if /I "%C%" EQU "B" goto :V09
 @if /I "%C%" EQU "C" goto :V08
+@if /I "%CC%" EQU "C" goto :V0889
 @if /I "%C%" EQU "D" goto :V07
 @if /I "%C%" EQU "E" goto :V06
 @if /I "%C%" EQU "F" goto :V05
@@ -50,78 +66,120 @@ set /P C="Your Choice? (Character, after that enter)"
 @if /I "%C%" EQU "I" goto :V02
 @if /I "%C%" EQU "J" goto :V01
 @if /I "%C%" EQU "Q" goto :eof
-goto choice1
+@if /I "%C%" EQU "reset" goto :res
+@goto choice1
 
+:res
+echo del %~dp0\etc\path_unix.txt %~dp0\etc\path_win.txt
+pause
+goto start
 
 
 
 :V10
 cls
+color 0B
 rem wem10r
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::wem10r %SYNC_PATH%/WEM10/
+echo mkdir %SYNC_PATH2%\WEM10
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::wem10r %SYNC_PATH2%/WEM10/
 pause
 goto choice1
 
 
 :V09
 cls
+color 0B
 rem winterberg_sp_09
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg_sp_09 %SYNC_PATH%/WEM09
+mkdir %SYNC_PATH2%\WEM09
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg_sp_09 %SYNC_PATH2%/WEM09
 goto choice1
 
 :V08
 cls
+color 0B
 rem winterberg88
 rem winterberg889
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg889 %SYNC_PATH%/WEM08
+mkdir %SYNC_PATH2%\WEM08
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg88 %SYNC_PATH2%/WEM08
+goto choice1
+
+:V0889
+rem winterberg889
+mkdir %SYNC_PATH2%\WEM0889
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg889 %SYNC_PATH2%/WEM0889
 goto choice1
 
 
 :V07
+color 0B
 cls
 rem winterberg75
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg75 %SYNC_PATH%/WEM07
+mkdir %SYNC_PATH2%\WEM07
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg75 %SYNC_PATH2%/WEM07
 goto choice1
 
 :V06
+color 0B
 cls
 rem winterberg60
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg60 %SYNC_PATH%/WEM06
+mkdir %SYNC_PATH2%\WEM06
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg60 %SYNC_PATH2%/WEM06
 goto choice1
 
 
 :V05
 cls
 rem winterberg58
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg58 %SYNC_PATH%/WEM05
+mkdir %SYNC_PATH2%\WEM05
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg58 %SYNC_PATH2%/WEM05
 goto choice1
 
 :V04
+color 0B
 cls
 rem winterberg40
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg40 %SYNC_PATH%/WEM04
+mkdir %SYNC_PATH2%\WEM04
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg40 %SYNC_PATH2%/WEM04
 goto choice1
 
 
 :V03
+color 0c
 cls
-echo Sorry, no release avaible
+echo.
+echo.
+timeout 1 >NUL
+echo "                 (__)"
+echo "                (oo)"
+echo "          /------\/"
+echo "         / |    ||"
+echo "        *  /\---/\"
+echo "           ~~   ~~"
+timeout 1 >NUL
+echo ":-( Sorry, no release avaible, if you know about this contact updater+winterberg_v3@wiki-mod.de )-:"
+
+echo.
+timeout 0 >NUL
+echo.
+timeout 0 >NUL
 pause
 cls
 @goto choice1
 
 
 :V02
+mkdir %SYNC_PATH2%\WEM02
 cls
 rem winterberg21
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg21 %SYNC_PATH%/WEM02
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg21 %SYNC_PATH2%/WEM02
 goto choice1
 
 
 :V01
 cls
+mkdir %SYNC_PATH2%\WEM01
 rem winterberg10
-%SYNC_CMD% %SYNC_OPT% ccbnet01.ccb-net.it::winterberg10 %SYNC_PATH%/WEM01
+%SYNC_CMD% %SYNC_OPT% winterberg-updater.wiki-mod.de::winterberg10 %SYNC_PATH2%/WEM01
 goto choice1
 
 
